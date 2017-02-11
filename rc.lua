@@ -12,30 +12,13 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+local config_path = awful.util.getdir("config") .. "/"
+local function load_config_module(name)
+   dofile(config_path .. "configuration/" .. name .. ".lua")
 end
 
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
+load_config_module("errors")
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
-        in_error = false
-    end)
-end
--- }}}
 local freedesktop = require("freedesktop")
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
@@ -547,3 +530,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 awful.spawn("compton")
 gears.wallpaper.maximized("/home/samis/media/pictures/wallpaper.jpg", nil, true)
+
