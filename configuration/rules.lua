@@ -30,8 +30,8 @@ awful.rules.rules = {
           "Sxiv",
           "Wpa_gui",
           "pinentry",
-          "veromix",
-          "xtightvncviewer"},
+          "ck2",
+          "xtightvncviewex"},
 
         name = {
           "Event Tester",  -- xev.
